@@ -1,0 +1,36 @@
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+
+export default function AdminNav() {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const username = localStorage.getItem('admin_username')
+
+  function logout() {
+    localStorage.removeItem('admin_token')
+    localStorage.removeItem('admin_username')
+    navigate('/admin/login')
+  }
+
+  return (
+    <header className="admin-header">
+      <div className="admin-header__inner">
+        <Link to="/admin/properties" className="brand">
+          <span className="brand__mark">M</span>
+          <span className="brand__name">Meridian Admin</span>
+        </Link>
+        <nav className="admin-nav">
+          <Link className={location.pathname.startsWith('/admin/properties') ? 'is-active' : ''} to="/admin/properties">
+            Properties
+          </Link>
+          <Link className={location.pathname.startsWith('/admin/leads') ? 'is-active' : ''} to="/admin/leads">
+            Leads
+          </Link>
+        </nav>
+        <div className="admin-header__user">
+          <span>{username}</span>
+          <button className="btn btn--ghost btn--small" onClick={logout}>Sign out</button>
+        </div>
+      </div>
+    </header>
+  )
+}
