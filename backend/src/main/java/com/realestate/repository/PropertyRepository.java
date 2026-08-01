@@ -15,13 +15,13 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     @Query("""
             SELECT p FROM Property p
             WHERE p.active = true
-            AND (:city IS NULL OR LOWER(p.city) = LOWER(:city))
+            AND LOWER(p.city) = LOWER(COALESCE(:city, p.city))
             AND (:listingType IS NULL OR p.listingType = :listingType)
-            AND (:propertyType IS NULL OR LOWER(p.propertyType) = LOWER(:propertyType))
+            AND LOWER(p.propertyType) = LOWER(COALESCE(:propertyType, p.propertyType))
             AND (:minPrice IS NULL OR p.price >= :minPrice)
             AND (:maxPrice IS NULL OR p.price <= :maxPrice)
-            AND (:keyword IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
-                 OR LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%')))
+            AND (:keyword IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', COALESCE(:keyword, ''), '%'))
+                 OR LOWER(p.description) LIKE LOWER(CONCAT('%', COALESCE(:keyword, ''), '%')))
             """)
     Page<Property> search(
             @Param("city") String city,
