@@ -46,6 +46,10 @@ public class PropertyRequest {
     @PositiveOrZero
     private Double areaSqft;
 
+    private String developerName;
+
+    private com.realestate.model.ProjectStatus projectStatus;
+
     private List<@NotBlank String> imageUrls;
 
     private Boolean active;

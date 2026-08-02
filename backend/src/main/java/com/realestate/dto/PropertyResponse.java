@@ -1,6 +1,7 @@
 package com.realestate.dto;
 
 import com.realestate.model.ListingType;
+import com.realestate.model.ProjectStatus;
 import com.realestate.model.Property;
 
 import java.math.BigDecimal;
@@ -20,6 +21,8 @@ public record PropertyResponse(
         Integer bedrooms,
         Integer bathrooms,
         Double areaSqft,
+        String developerName,
+        ProjectStatus projectStatus,
         List<String> imageUrls,
         boolean active,
         Instant createdAt,
@@ -29,8 +32,10 @@ public record PropertyResponse(
         return new PropertyResponse(
                 p.getId(), p.getTitle(), p.getDescription(), p.getPrice(), p.getListingType(),
                 p.getPropertyType(), p.getCity(), p.getArea(), p.getAddress(),
-                p.getBedrooms(), p.getBathrooms(), p.getAreaSqft(), p.getImageUrls(),
+                p.getBedrooms(), p.getBathrooms(), p.getAreaSqft(),
+                p.getDeveloperName(), p.getProjectStatus(), p.getImageUrls(),
                 p.isActive(), p.getCreatedAt(), p.getUpdatedAt()
         );
     }
 }
+

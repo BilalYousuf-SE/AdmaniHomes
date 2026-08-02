@@ -52,7 +52,12 @@ public class Property {
     private Integer bathrooms;
     private Double areaSqft;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    private String developerName;
+
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus projectStatus; // OFF_PLAN or READY - nullable, only meaningful for "project" style listings
+
+    @ElementCollection
     @CollectionTable(name = "property_images", joinColumns = @JoinColumn(name = "property_id"))
     @Column(name = "image_url", length = 1000)
     private List<String> imageUrls = new ArrayList<>();

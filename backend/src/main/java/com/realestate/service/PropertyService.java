@@ -77,6 +77,8 @@ public class PropertyService {
         property.setBedrooms(r.getBedrooms());
         property.setBathrooms(r.getBathrooms());
         property.setAreaSqft(r.getAreaSqft());
+        property.setDeveloperName(r.getDeveloperName());
+        property.setProjectStatus(r.getProjectStatus());
         property.setImageUrls(r.getImageUrls() != null ? r.getImageUrls() : new java.util.ArrayList<>());
         if (r.getActive() != null) {
             property.setActive(r.getActive());
