@@ -52,7 +52,7 @@ public class Property {
     private Integer bathrooms;
     private Double areaSqft;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "property_images", joinColumns = @JoinColumn(name = "property_id"))
     @Column(name = "image_url", length = 1000)
     private List<String> imageUrls = new ArrayList<>();
