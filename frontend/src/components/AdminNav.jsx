@@ -28,6 +28,9 @@ export default function AdminNav() {
           <Link className={location.pathname.startsWith('/admin/partners') ? 'is-active' : ''} to="/admin/partners">
             Partners
           </Link>
+          <Link className={location.pathname.startsWith('/admin/settings') ? 'is-active' : ''} to="/admin/settings">
+            Settings
+          </Link>
         </nav>
         <div className="admin-header__user">
           <span>{username}</span>

@@ -8,6 +8,7 @@ import AdminProperties from './pages/AdminProperties.jsx'
 import AdminPropertyForm from './pages/AdminPropertyForm.jsx'
 import AdminLeads from './pages/AdminLeads.jsx'
 import AdminPartners from './pages/AdminPartners.jsx'
+import AdminSettings from './pages/AdminSettings.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 export default function App() {
@@ -75,6 +76,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <AdminPartners />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/settings"
+          element={
+            <ProtectedRoute>
+              <AdminSettings />
             </ProtectedRoute>
           }
         />

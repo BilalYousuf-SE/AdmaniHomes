@@ -447,6 +447,9 @@ input:focus, select:focus, textarea:focus {
   color: var(--brass-dark); background: var(--sage);
 }
 
+.admin-content__subtitle { color: #6b6a5f; font-size: 0.9rem; margin: -0.6rem 0 1.4rem; }
+.admin-settings__saved { color: #2f5a3f; font-weight: 600; font-size: 0.88rem; }
+
 @media (max-width: 860px) {
   .property-detail__content { grid-template-columns: 1fr; }
   .property-detail__sidebar { position: static; }
