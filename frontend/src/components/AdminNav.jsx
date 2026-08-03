@@ -25,6 +25,9 @@ export default function AdminNav() {
           <Link className={location.pathname.startsWith('/admin/leads') ? 'is-active' : ''} to="/admin/leads">
             Leads
           </Link>
+          <Link className={location.pathname.startsWith('/admin/partners') ? 'is-active' : ''} to="/admin/partners">
+            Partners
+          </Link>
         </nav>
         <div className="admin-header__user">
           <span>{username}</span>

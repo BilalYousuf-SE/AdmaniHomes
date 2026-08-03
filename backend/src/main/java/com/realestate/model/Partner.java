@@ -23,7 +23,7 @@ public class Partner {
     @Column(nullable = false, length = 120)
     private String name;
 
-    @Column(nullable = false, length = 1000)
+    @Column(length = 1000)
     private String logoUrl;
 
     // Lower numbers show first in the rotating strip.

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import api, { extractErrorMessage } from '../api/api.js'
 import AdminNav from '../components/AdminNav.jsx'
+import MediaUploader from '../components/MediaUploader.jsx'
 
 const EMPTY_FORM = {
   title: '',
@@ -15,7 +16,9 @@ const EMPTY_FORM = {
   bedrooms: '',
   bathrooms: '',
   areaSqft: '',
-  imageUrlsText: '',
+  developerName: '',
+  projectStatus: '',
+  imageUrls: [],
   active: true,
 }
 
@@ -44,7 +47,9 @@ export default function AdminPropertyForm({ mode }) {
           bedrooms: p.bedrooms ?? '',
           bathrooms: p.bathrooms ?? '',
           areaSqft: p.areaSqft ?? '',
-          imageUrlsText: (p.imageUrls || []).join('\n'),
+          developerName: p.developerName || '',
+          projectStatus: p.projectStatus || '',
+          imageUrls: p.imageUrls || [],
           active: p.active,
         })
       })
@@ -73,7 +78,9 @@ export default function AdminPropertyForm({ mode }) {
       bedrooms: form.bedrooms === '' ? null : Number(form.bedrooms),
       bathrooms: form.bathrooms === '' ? null : Number(form.bathrooms),
       areaSqft: form.areaSqft === '' ? null : Number(form.areaSqft),
-      imageUrls: form.imageUrlsText.split('\n').map((s) => s.trim()).filter(Boolean),
+      developerName: form.developerName.trim() || null,
+      projectStatus: form.projectStatus || null,
+      imageUrls: form.imageUrls,
       active: form.active,
     }
 
@@ -124,7 +131,7 @@ export default function AdminPropertyForm({ mode }) {
                 <input type="text" value={form.propertyType} onChange={(e) => set('propertyType', e.target.value)} required />
               </label>
               <label>
-                Price (USD)
+                Price (AED)
                 <input type="number" min="0" value={form.price} onChange={(e) => set('price', e.target.value)} required />
               </label>
             </div>
@@ -160,13 +167,31 @@ export default function AdminPropertyForm({ mode }) {
               </label>
             </div>
 
+            <div className="admin-form__row">
+              <label>
+                Developer (for projects)
+                <input
+                  type="text"
+                  placeholder="e.g. Emaar, Meraas, Damac"
+                  value={form.developerName}
+                  onChange={(e) => set('developerName', e.target.value)}
+                />
+              </label>
+              <label>
+                Project status
+                <select value={form.projectStatus} onChange={(e) => set('projectStatus', e.target.value)}>
+                  <option value="">— Not a project —</option>
+                  <option value="OFF_PLAN">Off-plan</option>
+                  <option value="READY">Ready</option>
+                </select>
+              </label>
+            </div>
+
             <label>
-              Image URLs (one per line)
-              <textarea
-                rows={3}
-                placeholder={'https://example.com/photo1.jpg\nhttps://example.com/photo2.jpg'}
-                value={form.imageUrlsText}
-                onChange={(e) => set('imageUrlsText', e.target.value)}
+              Photos &amp; videos
+              <MediaUploader
+                value={form.imageUrls}
+                onChange={(urls) => set('imageUrls', urls)}
               />
             </label>
 

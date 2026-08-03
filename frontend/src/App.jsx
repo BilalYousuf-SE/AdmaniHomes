@@ -7,6 +7,7 @@ import AdminLogin from './pages/AdminLogin.jsx'
 import AdminProperties from './pages/AdminProperties.jsx'
 import AdminPropertyForm from './pages/AdminPropertyForm.jsx'
 import AdminLeads from './pages/AdminLeads.jsx'
+import AdminPartners from './pages/AdminPartners.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 export default function App() {
@@ -66,6 +67,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <AdminLeads />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/partners"
+          element={
+            <ProtectedRoute>
+              <AdminPartners />
             </ProtectedRoute>
           }
         />

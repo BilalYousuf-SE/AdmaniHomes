@@ -73,7 +73,7 @@ export default function AdminProperties() {
                     <td>{p.title}</td>
                     <td>{p.city}</td>
                     <td>{p.listingType === 'RENT' ? 'Rent' : 'Sale'}</td>
-                    <td>${Number(p.price).toLocaleString()}</td>
+                    <td>AED {Number(p.price).toLocaleString()}</td>
                     <td>
                       <span className={`badge ${p.active ? 'badge--active' : 'badge--inactive'}`}>
                         {p.active ? 'Active' : 'Hidden'}

@@ -11,7 +11,6 @@ public class PartnerRequest {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Logo URL is required")
     private String logoUrl;
 
     private Integer displayOrder;

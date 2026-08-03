@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 function formatPrice(price, listingType) {
   const n = Number(price)
   const formatted = n.toLocaleString(undefined, { maximumFractionDigits: 0 })
-  return listingType === 'RENT' ? `$${formatted} / mo` : `$${formatted}`
+  return listingType === 'RENT' ? `AED ${formatted} / yr` : `AED ${formatted}`
 }
 
 function refCode(id) {
