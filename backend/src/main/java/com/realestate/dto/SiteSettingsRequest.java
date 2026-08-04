@@ -5,12 +5,25 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class SiteSettingsRequest {
 
+    @Size(max = 150)
+    private String realtorName;
+
+    @Size(max = 250)
+    private String realtorTitle;
+
     @Size(max = 2000, message = "Bio must be under 2000 characters")
     private String bio;
+
+    @Size(max = 1000, message = "Mission must be under 1000 characters")
+    private String mission;
+
+    private List<@Size(max = 150) String> expertise;
 
     private String realtorPhotoUrl;
 

@@ -24,7 +24,11 @@ public class SiteSettingsService {
     @Transactional
     public SiteSettingsResponse update(SiteSettingsRequest request) {
         SiteSettings settings = getOrCreate();
+        settings.setRealtorName(request.getRealtorName());
+        settings.setRealtorTitle(request.getRealtorTitle());
         settings.setBio(request.getBio());
+        settings.setMission(request.getMission());
+        settings.setExpertise(request.getExpertise() != null ? request.getExpertise() : new java.util.ArrayList<>());
         settings.setRealtorPhotoUrl(request.getRealtorPhotoUrl());
         settings.setWhatsappNumber(request.getWhatsappNumber());
         return SiteSettingsResponse.from(siteSettingsRepository.save(settings));
