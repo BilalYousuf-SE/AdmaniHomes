@@ -32,8 +32,8 @@ export default function AdminLogin() {
     <main className="admin-auth">
       <form className="admin-auth__card" onSubmit={handleSubmit}>
         <p className="brand admin-auth__brand">
-          <span className="brand__mark">M</span>
-          <span className="brand__name">Meridian Homes</span>
+          <span className="brand__mark">A</span>
+          <span className="brand__name">Admani Homes</span>
         </p>
         <h1>Admin sign in</h1>
         <p className="admin-auth__hint">Manage properties and leads.</p>

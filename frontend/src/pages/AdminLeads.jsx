@@ -82,7 +82,7 @@ export default function AdminLeads() {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Property</th>
+                  <th>Project</th>
                   <th>Message</th>
                   <th>Status</th>
                   <th></th>

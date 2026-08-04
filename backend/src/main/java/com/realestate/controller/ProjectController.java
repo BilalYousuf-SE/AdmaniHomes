@@ -1,9 +1,8 @@
 package com.realestate.controller;
 
-import com.realestate.dto.PropertyRequest;
-import com.realestate.dto.PropertyResponse;
-import com.realestate.model.ListingType;
-import com.realestate.service.PropertyService;
+import com.realestate.dto.ProjectRequest;
+import com.realestate.dto.ProjectResponse;
+import com.realestate.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,59 +12,54 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequestMapping("/api/properties")
 @RequiredArgsConstructor
-public class PropertyController {
+public class ProjectController {
 
-    private final PropertyService propertyService;
+    private final ProjectService projectService;
 
     // ---- Public endpoints (no auth required) ----
 
     @GetMapping
-    public Page<PropertyResponse> search(
+    public Page<ProjectResponse> search(
             @RequestParam(required = false) String city,
-            @RequestParam(required = false) ListingType listingType,
             @RequestParam(required = false) String propertyType,
-            @RequestParam(required = false) BigDecimal minPrice,
-            @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) String keyword,
             @PageableDefault(size = 12, sort = "createdAt") Pageable pageable) {
-        return propertyService.search(city, listingType, propertyType, minPrice, maxPrice, keyword, pageable);
+        return projectService.search(city, propertyType, keyword, pageable);
     }
 
     @GetMapping("/{id}")
-    public PropertyResponse getById(@PathVariable Long id) {
-        return propertyService.getById(id);
+    public ProjectResponse getById(@PathVariable Long id) {
+        return projectService.getById(id);
     }
 
     // ---- Admin-only endpoints ----
 
     @GetMapping("/admin/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public Page<PropertyResponse> listAllForAdmin(@PageableDefault(size = 20, sort = "createdAt") Pageable pageable) {
-        return propertyService.listAllForAdmin(pageable);
+    public Page<ProjectResponse> listAllForAdmin(@PageableDefault(size = 20, sort = "createdAt") Pageable pageable) {
+        return projectService.listAllForAdmin(pageable);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public PropertyResponse create(@Valid @RequestBody PropertyRequest request) {
-        return propertyService.create(request);
+    public ProjectResponse create(@Valid @RequestBody ProjectRequest request) {
+        return projectService.create(request);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public PropertyResponse update(@PathVariable Long id, @Valid @RequestBody PropertyRequest request) {
-        return propertyService.update(id, request);
+    public ProjectResponse update(@PathVariable Long id, @Valid @RequestBody ProjectRequest request) {
+        return projectService.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        propertyService.delete(id);
+        projectService.delete(id);
     }
 }

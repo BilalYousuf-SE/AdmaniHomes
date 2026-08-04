@@ -6,9 +6,9 @@ import com.realestate.dto.LeadStatusUpdateRequest;
 import com.realestate.exception.ResourceNotFoundException;
 import com.realestate.model.Lead;
 import com.realestate.model.LeadStatus;
-import com.realestate.model.Property;
+import com.realestate.model.Project;
 import com.realestate.repository.LeadRepository;
-import com.realestate.repository.PropertyRepository;
+import com.realestate.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LeadService {
 
     private final LeadRepository leadRepository;
-    private final PropertyRepository propertyRepository;
+    private final ProjectRepository propertyRepository;
 
     @Transactional
     public void submitLead(LeadRequest request) {
@@ -32,8 +32,8 @@ public class LeadService {
         lead.setStatus(LeadStatus.NEW);
 
         if (request.getPropertyId() != null) {
-            Property property = propertyRepository.findById(request.getPropertyId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Property not found: " + request.getPropertyId()));
+            Project property = propertyRepository.findById(request.getPropertyId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Project not found: " + request.getPropertyId()));
             lead.setProperty(property);
         }
 

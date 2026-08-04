@@ -32,11 +32,11 @@ public class Lead {
     @Column(length = 1000)
     private String message;
 
-    // The property this lead is interested in. Nullable so the site can also
-    // support a general "contact us" enquiry with no specific property.
+    // The project this lead is interested in. Nullable so the site can also
+    // support a general "contact us" enquiry with no specific project.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "property_id")
-    private Property property;
+    private Project property;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

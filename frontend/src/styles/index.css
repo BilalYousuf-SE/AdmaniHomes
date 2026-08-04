@@ -1,5 +1,5 @@
 /* ============================================================
-   Meridian Homes — design tokens
+   Admani Homes — design tokens
    Palette: deep evergreen + warm parchment + brass accent
    Type: Fraunces (display) / Inter (body) / IBM Plex Mono (data)
    Signature: listing "tickets" with a perforated price line,
@@ -150,6 +150,50 @@ a { color: inherit; text-decoration: none; }
 }
 .hero h1 { color: var(--parchment); font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1.1; }
 .hero__lede { font-size: 1.05rem; color: var(--sage); max-width: 46ch; }
+.hero--compact .hero__inner { padding-top: 3rem; padding-bottom: 3rem; }
+
+.section-title {
+  font-size: 1.6rem; text-align: center;
+  margin: 0 0 1.6rem;
+}
+
+/* ---------- Partners strip ---------- */
+.partners-strip { background: var(--parchment-panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1.6rem 0; overflow: hidden; }
+.partners-strip__eyebrow {
+  text-align: center; font-family: var(--font-mono); text-transform: uppercase;
+  letter-spacing: 0.14em; font-size: 0.72rem; color: var(--brass-dark); margin: 0 0 1rem;
+}
+.partners-strip__track {
+  display: flex; gap: 3rem; width: max-content;
+  animation: partners-scroll 32s linear infinite;
+}
+.partners-strip:hover .partners-strip__track { animation-play-state: paused; }
+@keyframes partners-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.partners-strip__item { display: flex; align-items: center; justify-content: center; height: 40px; }
+.partners-strip__item img { height: 100%; width: auto; max-width: 140px; object-fit: contain; filter: grayscale(1); opacity: 0.75; }
+.partners-strip__badge {
+  font-family: var(--font-mono); font-weight: 600; font-size: 0.82rem;
+  letter-spacing: 0.05em; color: var(--evergreen-dark);
+  border: 1px solid var(--line); border-radius: 20px;
+  padding: 0.4rem 1rem; white-space: nowrap;
+}
+
+/* ---------- About realtor ---------- */
+.about-realtor { padding: 3rem 1.5rem; background: var(--parchment); }
+.about-realtor__inner {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: 280px 1fr; gap: 2.5rem; align-items: center;
+}
+.about-realtor__inner--no-photo { grid-template-columns: 1fr; max-width: 640px; text-align: center; }
+.about-realtor__photo img {
+  width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%;
+  border: 4px solid var(--parchment-panel); box-shadow: var(--shadow);
+}
+.about-realtor__text p { line-height: 1.65; color: #3c3c34; max-width: 60ch; }
+.about-realtor__inner--no-photo .about-realtor__text p { margin-left: auto; margin-right: auto; }
 
 /* ---------- Filters ---------- */
 .filters { padding-top: 2rem; }
@@ -198,8 +242,14 @@ input:focus, select:focus, textarea:focus {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .listing-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(35,38,31,0.12); }
-.listing-card__media { position: relative; aspect-ratio: 4 / 3; background: var(--sage); }
-.listing-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.listing-card__media { position: relative; aspect-ratio: 4 / 3; background: var(--sage); overflow: hidden; }
+.listing-card__media-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.listing-card__media-img.is-active { opacity: 1; }
 .listing-card__media--placeholder {
   display: flex; align-items: center; justify-content: center;
   color: var(--evergreen); font-size: 0.85rem;
@@ -213,43 +263,40 @@ input:focus, select:focus, textarea:focus {
   padding: 0.25rem 0.6rem;
   border-radius: 2px;
   letter-spacing: 0.02em;
+  z-index: 2;
 }
+.listing-card__dots {
+  position: absolute; bottom: 0.6rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 0.3rem; z-index: 2;
+}
+.listing-card__dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  transition: background 0.2s ease;
+}
+.listing-card__dots span.is-active { background: #fff; }
 .listing-card__body { padding: 1rem 1.1rem 1.1rem; }
 .listing-card__ref {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--brass-dark);
   letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .listing-card__title { font-size: 1.15rem; margin: 0.2rem 0 0.15rem; }
-.listing-card__location { font-size: 0.86rem; color: #6b6a5f; margin: 0 0 0.6rem; }
+.listing-card__location { font-size: 0.86rem; color: #6b6a5f; margin: 0 0 0.5rem; }
+.listing-card__description {
+  font-size: 0.86rem; color: #3c3c34; line-height: 1.5;
+  margin: 0 0 0.6rem;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
 .listing-card__facts {
   display: flex; gap: 0.8rem;
-  font-size: 0.82rem; color: var(--evergreen-dark);
-  font-weight: 500;
+  font-size: 0.78rem; color: var(--evergreen-dark);
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em;
+  margin-bottom: 0.9rem;
 }
-.listing-card__perforation {
-  border-top: 1px dashed var(--line);
-  margin: 0.85rem 0 0.7rem;
-  position: relative;
-}
-.listing-card__perforation::before, .listing-card__perforation::after {
-  content: '';
-  position: absolute;
-  top: -6px;
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 1px solid var(--line);
-}
-.listing-card__perforation::before { left: -1.1rem; }
-.listing-card__perforation::after { right: -1.1rem; }
-.listing-card__price {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.25rem;
-  color: var(--evergreen-dark);
-}
+.listing-card__cta { width: 100%; }
 
 /* ---------- State messages ---------- */
 .state-message { padding: 2rem 0; text-align: center; color: #6b6a5f; }
@@ -265,6 +312,30 @@ input:focus, select:focus, textarea:focus {
 /* ---------- Contact / lead form ---------- */
 .contact-section { padding-top: 1rem; padding-bottom: 3rem; }
 .contact-section__inner { max-width: 560px; }
+.contact-section__clear {
+  display: block; width: 100%; text-align: center;
+  margin-top: 0.8rem; background: none; border: none;
+  font-size: 0.82rem; color: var(--evergreen); text-decoration: underline;
+  cursor: pointer; font-family: var(--font-body);
+}
+
+/* ---------- Contact page ---------- */
+.contact-page__body { padding: 2.5rem 1.5rem 3.5rem; max-width: 1120px; margin: 0 auto; }
+.contact-page__grid {
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem;
+  align-items: start; max-width: 900px; margin: 0 auto;
+}
+.contact-page__whatsapp {
+  background: var(--parchment-panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.8rem; text-align: center; box-shadow: var(--shadow);
+}
+.contact-page__whatsapp h2 { font-size: 1.1rem; }
+.contact-page__qr { width: 100%; max-width: 220px; margin: 0.8rem auto 1.2rem; display: block; border-radius: 4px; }
+@media (max-width: 760px) {
+  .contact-page__grid { grid-template-columns: 1fr; }
+  .about-realtor__inner { grid-template-columns: 1fr; text-align: center; }
+  .about-realtor__photo img { max-width: 220px; margin: 0 auto; }
+}
 .lead-form {
   background: var(--parchment-panel);
   border: 1px solid var(--line);

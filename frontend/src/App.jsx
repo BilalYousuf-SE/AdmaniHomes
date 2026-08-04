@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
-import PropertyDetail from './pages/PropertyDetail.jsx'
+import Contact from './pages/Contact.jsx'
 import AdminLogin from './pages/AdminLogin.jsx'
 import AdminProperties from './pages/AdminProperties.jsx'
 import AdminPropertyForm from './pages/AdminPropertyForm.jsx'
@@ -15,7 +15,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <Routes>
-        {/* Public site */}
+        {/* Public site - just two pages, by design */}
         <Route
           path="/"
           element={
@@ -27,11 +27,11 @@ export default function App() {
           }
         />
         <Route
-          path="/properties/:id"
+          path="/contact"
           element={
             <>
               <Navbar />
-              <PropertyDetail />
+              <Contact />
               <Footer />
             </>
           }

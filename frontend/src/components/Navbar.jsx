@@ -6,11 +6,11 @@ export default function Navbar() {
       <div className="site-header__inner">
         <Link to="/" className="brand">
           <span className="brand__mark">M</span>
-          <span className="brand__name">Meridian&nbsp;Homes</span>
+          <span className="brand__name">Admani&nbsp;Homes</span>
         </Link>
         <nav className="site-nav">
-          <a href="/#listings">Listings</a>
-          <a href="/#contact">Contact</a>
+          <Link to="/">Home</Link>
+          <Link to="/contact">Contact</Link>
         </nav>
       </div>
     </header>

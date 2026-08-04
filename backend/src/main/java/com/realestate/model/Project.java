@@ -6,18 +6,17 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "properties")
+@Table(name = "project")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Property {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +28,9 @@ public class Property {
     @Column(length = 4000)
     private String description;
 
-    @Column(nullable = false)
-    private BigDecimal price;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ListingType listingType; // SALE or RENT
-
-    @Column(nullable = false)
     private String propertyType; // House, Apartment, Plot, Commercial...
 
-    @Column(nullable = false)
+    @Column
     private String city;
 
     @Column
@@ -47,10 +38,6 @@ public class Property {
 
     @Column(length = 500)
     private String address;
-
-    private Integer bedrooms;
-    private Integer bathrooms;
-    private Double areaSqft;
 
     private String developerName;
 

@@ -15,12 +15,12 @@ export default function AdminNav() {
     <header className="admin-header">
       <div className="admin-header__inner">
         <Link to="/admin/properties" className="brand">
-          <span className="brand__mark">M</span>
-          <span className="brand__name">Meridian Admin</span>
+          <span className="brand__mark">A</span>
+          <span className="brand__name">Admani Admin</span>
         </Link>
         <nav className="admin-nav">
           <Link className={location.pathname.startsWith('/admin/properties') ? 'is-active' : ''} to="/admin/properties">
-            Properties
+            Projects
           </Link>
           <Link className={location.pathname.startsWith('/admin/leads') ? 'is-active' : ''} to="/admin/leads">
             Leads
