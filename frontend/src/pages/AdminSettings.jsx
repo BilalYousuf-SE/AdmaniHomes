@@ -5,35 +5,34 @@ import MediaUploader from '../components/MediaUploader.jsx'
 
 export default function AdminSettings() {
   const [form, setForm] = useState({
-  realtorName: '',
-  realtorTitle: '',
-  bio: '',
-  mission: '',
-  expertise: [],
-  realtorPhotoUrl: '',
-  whatsappNumber: ''})
+    realtorName: '',
+    realtorTitle: '',
+    bio: '',
+    mission: '',
+    expertise: [],
+    realtorPhotoUrl: '',
+    whatsappNumber: '',
+  })
   const [expertiseInput, setExpertiseInput] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
 
-
-  useEffect(() => {
-    setExpertiseInput(form.expertise.join(', '))
-  }, [form.expertise])
-
   useEffect(() => {
     api.get('/api/settings')
-      .then((res) => setForm({
-        realtorName: res.data.realtorName || '',
-        realtorTitle: res.data.realtorTitle || '',
-        bio: res.data.bio || '',
-        mission: res.data.mission || '',
-        expertise: res.data.expertise || [],
-        realtorPhotoUrl: res.data.realtorPhotoUrl || '',
-        whatsappNumber: res.data.whatsappNumber || '',
-      }))
+      .then((res) => {
+        setForm({
+          realtorName: res.data.realtorName || '',
+          realtorTitle: res.data.realtorTitle || '',
+          bio: res.data.bio || '',
+          mission: res.data.mission || '',
+          expertise: res.data.expertise || [],
+          realtorPhotoUrl: res.data.realtorPhotoUrl || '',
+          whatsappNumber: res.data.whatsappNumber || '',
+        })
+        setExpertiseInput((res.data.expertise || []).join(', '))
+      })
       .catch((err) => setError(extractErrorMessage(err)))
       .finally(() => setLoading(false))
   }, [])
@@ -67,63 +66,41 @@ export default function AdminSettings() {
         ) : (
           <form className="admin-form" onSubmit={handleSubmit}>
             <label>
-              Realtor Name
+              Realtor name
               <input
                 type="text"
                 value={form.realtorName}
-                onChange={(e) =>
-                  setForm({ ...form, realtorName: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, realtorName: e.target.value })}
               />
             </label>
 
             <label>
-              Realtor Title
+              Title / role
               <input
                 type="text"
+                placeholder="e.g. Real Estate Consultant | Investment Advisor"
                 value={form.realtorTitle}
-                onChange={(e) =>
-                  setForm({ ...form, realtorTitle: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, realtorTitle: e.target.value })}
               />
             </label>
 
             <label>
-              Your Photo
+              Your photo
               <MediaUploader
-                onUploaded={(urls) =>
-                  setForm({
-                    ...form,
-                    realtorPhotoUrl: urls[urls.length - 1] || '',
-                  })
-                }
+                value={form.realtorPhotoUrl ? [form.realtorPhotoUrl] : []}
+                onChange={(urls) => setForm({ ...form, realtorPhotoUrl: urls[urls.length - 1] || '' })}
                 accept="image/*"
                 maxFiles={1}
               />
-
-              {form.realtorPhotoUrl && (
-                <img
-                  src={form.realtorPhotoUrl}
-                  alt="Realtor"
-                  style={{
-                    marginTop: '10px',
-                    width: '150px',
-                    borderRadius: '8px',
-                    display: 'block',
-                  }}
-                />
-              )}
             </label>
-       
 
             <label>
               Bio
               <textarea
                 rows={6}
+                placeholder="A couple of paragraphs about who you are and your approach…"
                 value={form.bio}
-                onChange={(e) =>
-                  setForm({ ...form, bio: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, bio: e.target.value })}
               />
             </label>
 
@@ -132,42 +109,33 @@ export default function AdminSettings() {
               <textarea
                 rows={4}
                 value={form.mission}
-                onChange={(e) =>
-                  setForm({ ...form, mission: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, mission: e.target.value })}
               />
             </label>
 
             <label>
-              Expertise (comma separated)
+              Areas of expertise (comma separated)
               <textarea
                 rows={3}
+                placeholder="Off-Plan Properties, Investment Advisory, Market Analysis"
                 value={expertiseInput}
                 onChange={(e) => {
                   setExpertiseInput(e.target.value)
-
                   setForm({
                     ...form,
-                    expertise: e.target.value
-                      .split(',')
-                      .map((s) => s.trim())
-                      .filter(Boolean),
+                    expertise: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
                   })
                 }}
               />
             </label>
 
             <label>
-              WhatsApp Number
+              WhatsApp number
               <input
-                type="text"
+                type="tel"
+                placeholder="+971 50 000 0000"
                 value={form.whatsappNumber}
-                onChange={(e) =>
-                  setForm({
-                    ...form,
-                    whatsappNumber: e.target.value,
-                  })
-                }
+                onChange={(e) => setForm({ ...form, whatsappNumber: e.target.value })}
               />
             </label>
 

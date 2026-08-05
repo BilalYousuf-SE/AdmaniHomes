@@ -30,7 +30,7 @@ public class SiteSettings {
     @Column(length = 1000)
     private String mission;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "site_settings_expertise", joinColumns = @JoinColumn(name = "settings_id"))
     @Column(name = "item", length = 150)
     private List<String> expertise = new ArrayList<>();
