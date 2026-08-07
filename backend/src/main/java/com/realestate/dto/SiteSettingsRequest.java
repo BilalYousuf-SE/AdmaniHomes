@@ -29,4 +29,11 @@ public class SiteSettingsRequest {
 
     @Pattern(regexp = "^$|^\\+?[0-9]{7,15}$", message = "Enter a valid WhatsApp number (7-15 digits, optional +country code)")
     private String whatsappNumber;
+
+    @Pattern(regexp = "^$|^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$", message = "Enter a valid email address")
+    private String email;
+
+    private String instagramUrl;
+    private String facebookUrl;
+    private String linkedinUrl;
 }

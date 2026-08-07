@@ -25,6 +25,13 @@ export default function Contact() {
     ? `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(link)}`
     : null
 
+  const socials = [
+    settings?.email && { label: settings.email, href: `mailto:${settings.email}` },
+    settings?.instagramUrl && { label: 'Instagram', href: settings.instagramUrl },
+    settings?.facebookUrl && { label: 'Facebook', href: settings.facebookUrl },
+    settings?.linkedinUrl && { label: 'LinkedIn', href: settings.linkedinUrl },
+  ].filter(Boolean)
+
   return (
     <main className="contact-page">
       <section className="hero hero--compact">
@@ -48,6 +55,14 @@ export default function Contact() {
                 <a href={link} target="_blank" rel="noreferrer" className="btn btn--primary">
                   Open WhatsApp chat
                 </a>
+
+                {socials.length > 0 && (
+                  <div className="contact-page__socials">
+                    {socials.map((s) => (
+                      <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.label}</a>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 

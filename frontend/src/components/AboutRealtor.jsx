@@ -10,43 +10,41 @@ export default function AboutRealtor({ settings }) {
 
   return (
     <section className="about-realtor">
-      <div className="about-realtor__text">
-        <p className="hero__eyebrow">About</p>
-
-        <h2>The person behind Admani Homes</h2>
-
-        {hasRealtorName && (
-          <h3>{settings.realtorName}</h3>
+      <div className={`about-realtor__inner ${hasPhoto ? '' : 'about-realtor__inner--no-photo'}`}>
+        {hasPhoto && (
+          <div className="about-realtor__photo">
+            <img src={settings.realtorPhotoUrl} alt={settings.realtorName || 'Realtor'} />
+          </div>
         )}
 
-        {hasRealtorTitle && (
-          <p className="about-realtor__title">
-            {settings.realtorTitle}
-          </p>
-        )}
+        <div className="about-realtor__text">
+          <p className="hero__eyebrow">About</p>
+          {hasRealtorName ? <h2>{settings.realtorName}</h2> : <h2>The person behind Admani Homes</h2>}
+          {hasRealtorTitle && <p className="about-realtor__title">{settings.realtorTitle}</p>}
 
-        {hasBio && (
-          <p>{settings.bio}</p>
-        )}
-
-        {hasMission && (
-          <>
-            <h3>Mission</h3>
-            <p>{settings.mission}</p>
-          </>
-        )}
-
-        {hasExpertise && (
-          <>
-            <h3>Areas of Expertise</h3>
-            <ul>
-              {settings.expertise.map((item, index) => (
-                <li key={index}>{item}</li>
+          {hasBio && (
+            <div className="about-realtor__bio">
+              {settings.bio.split(/\n+/).filter(Boolean).map((para, i) => (
+                <p key={i}>{para}</p>
               ))}
-            </ul>
-          </>
-        )}
+            </div>
+          )}
+
+          {hasExpertise && (
+            <div className="about-realtor__expertise">
+              {settings.expertise.map((item, i) => (
+                <span key={i} className="about-realtor__pill">{item}</span>
+              ))}
+            </div>
+          )}
+
+          {hasMission && (
+            <blockquote className="about-realtor__mission">
+              <p>{settings.mission}</p>
+            </blockquote>
+          )}
+        </div>
       </div>
     </section>
   )
-} 
+}

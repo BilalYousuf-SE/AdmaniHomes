@@ -22,6 +22,12 @@ export default function MediaUploader({ value = [], onChange, accept = 'image/*,
       return
     }
 
+    // Track additions locally rather than reading the `value` prop inside the
+    // loop - `value` is frozen at the moment this function was called, so
+    // relying on it for a second/third file in the same batch would silently
+    // overwrite earlier uploads instead of adding to them.
+    let accumulated = [...value]
+
     for (const file of files) {
       const id = `${file.name}-${Date.now()}-${Math.random()}`
       setUploading((prev) => [...prev, { id, name: file.name, progress: 0, error: null }])
@@ -30,7 +36,8 @@ export default function MediaUploader({ value = [], onChange, accept = 'image/*,
         const { url } = await uploadToCloudinary(file, (percent) => {
           setUploading((prev) => prev.map((u) => (u.id === id ? { ...u, progress: percent } : u)))
         })
-        onChange([...value, url])
+        accumulated = [...accumulated, url]
+        onChange(accumulated)
       } catch (err) {
         setUploading((prev) => prev.map((u) => (u.id === id ? { ...u, error: err.message } : u)))
         continue

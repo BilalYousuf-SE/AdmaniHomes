@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { isVideoUrl } from '../api/upload.js'
 
 const STATUS_LABELS = { OFF_PLAN: 'Off-Plan', READY: 'Ready' }
-const ROTATE_MS = 3500
+const ROTATE_MS = 2800
 
-export default function ProjectCard({ project, onEnquire }) {
+export default function ProjectCard({ project, onEnquire, reverse }) {
   const images = (project.imageUrls || []).filter((u) => !isVideoUrl(u))
   const [index, setIndex] = useState(0)
 
@@ -19,8 +19,8 @@ export default function ProjectCard({ project, onEnquire }) {
   const location = [project.area, project.city].filter(Boolean).join(', ')
 
   return (
-    <div className="listing-card">
-      <div className="listing-card__media">
+    <article className={`project-row ${reverse ? 'project-row--reverse' : ''}`}>
+      <div className="project-row__media">
         {images.length > 0 ? (
           images.map((src, i) => (
             <img
@@ -28,19 +28,19 @@ export default function ProjectCard({ project, onEnquire }) {
               src={src}
               alt={project.title}
               loading="lazy"
-              className={`listing-card__media-img ${i === index ? 'is-active' : ''}`}
+              className={`project-row__media-img ${i === index ? 'is-active' : ''}`}
             />
           ))
         ) : (
-          <div className="listing-card__media listing-card__media--placeholder">No photo yet</div>
+          <div className="project-row__media-placeholder">No photos yet</div>
         )}
 
         {project.projectStatus && (
-          <span className="listing-card__tag">{STATUS_LABELS[project.projectStatus]}</span>
+          <span className="project-row__status">{STATUS_LABELS[project.projectStatus]}</span>
         )}
 
         {images.length > 1 && (
-          <div className="listing-card__dots">
+          <div className="project-row__dots">
             {images.map((_, i) => (
               <span key={i} className={i === index ? 'is-active' : ''} />
             ))}
@@ -48,29 +48,17 @@ export default function ProjectCard({ project, onEnquire }) {
         )}
       </div>
 
-      <div className="listing-card__body">
-        {project.developerName && (
-          <div className="listing-card__ref">{project.developerName}</div>
-        )}
+      <div className="project-row__content">
+        {project.developerName && <p className="project-row__developer">{project.developerName}</p>}
+        <h3>{project.title}</h3>
+        {location && <p className="project-row__location">{location}</p>}
+        {project.propertyType && <p className="project-row__type">{project.propertyType}</p>}
+        {project.description && <p className="project-row__description">{project.description}</p>}
 
-        <h3 className="listing-card__title">{project.title}</h3>
-
-        {location && <p className="listing-card__location">{location}</p>}
-
-        {project.description && (
-          <p className="listing-card__description">{project.description}</p>
-        )}
-
-        {project.propertyType && (
-          <div className="listing-card__facts">
-            <span>{project.propertyType}</span>
-          </div>
-        )}
-
-        <button type="button" className="btn btn--primary listing-card__cta" onClick={() => onEnquire?.(project)}>
+        <button type="button" className="btn btn--primary" onClick={() => onEnquire?.(project)}>
           Enquire about this project
         </button>
       </div>
-    </div>
+    </article>
   )
 }

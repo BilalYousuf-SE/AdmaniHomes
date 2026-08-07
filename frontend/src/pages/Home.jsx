@@ -36,17 +36,17 @@ export default function Home() {
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const heroLede = settings?.bio
-    ? settings.bio
-    : 'Browse our latest projects and send an enquiry in seconds — no account needed.'
-
   return (
     <main>
       <section className="hero">
         <div className="hero__inner">
           <p className="hero__eyebrow">Admani Homes</p>
-          <h1>Every project, out in the open.</h1>
-          <p className="hero__lede">{heroLede}</p>
+          <h1>Find your next address in Dubai.</h1>
+          <p className="hero__lede">
+            Curated projects, straight talk, and a direct line to the person handling your deal —
+            no call centre, no account needed to browse.
+          </p>
+          <a href="#projects" className="btn btn--gold hero__cta">View Projects</a>
         </div>
       </section>
 
@@ -54,8 +54,11 @@ export default function Home() {
 
       <AboutRealtor settings={settings} />
 
-      <section className="listing-grid-section" id="projects">
-        <h2 className="section-title">Featured Projects</h2>
+      <section className="projects-section" id="projects">
+        <div className="projects-section__header">
+          <p className="hero__eyebrow">Portfolio</p>
+          <h2 className="section-title">Featured Projects</h2>
+        </div>
 
         {loading && <p className="state-message">Loading projects…</p>}
         {error && <p className="state-message state-message--error">{error}</p>}
@@ -63,15 +66,19 @@ export default function Home() {
           <p className="state-message">No projects listed yet — check back soon.</p>
         )}
 
-        <div className="listing-grid">
-          {projects.map((p) => (
-            <ProjectCard key={p.id} project={p} onEnquire={handleEnquire} />
+        <div className="projects-list">
+          {projects.map((p, i) => (
+            <ProjectCard key={p.id} project={p} onEnquire={handleEnquire} reverse={i % 2 === 1} />
           ))}
         </div>
       </section>
 
       <section className="contact-section" ref={formRef} id="contact-form">
         <div className="contact-section__inner">
+          <p className="hero__eyebrow" style={{ textAlign: 'center' }}>Get in touch</p>
+          <h2 className="section-title">
+            {selectedProject ? `Enquire about ${selectedProject.title}` : "Let's talk"}
+          </h2>
           <LeadForm
             propertyId={selectedProject?.id}
             propertyTitle={selectedProject?.title}

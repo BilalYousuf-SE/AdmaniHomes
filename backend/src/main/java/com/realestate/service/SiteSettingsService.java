@@ -31,6 +31,10 @@ public class SiteSettingsService {
         settings.setExpertise(request.getExpertise() != null ? request.getExpertise() : new java.util.ArrayList<>());
         settings.setRealtorPhotoUrl(request.getRealtorPhotoUrl());
         settings.setWhatsappNumber(request.getWhatsappNumber());
+        settings.setEmail(request.getEmail());
+        settings.setInstagramUrl(request.getInstagramUrl());
+        settings.setFacebookUrl(request.getFacebookUrl());
+        settings.setLinkedinUrl(request.getLinkedinUrl());
         return SiteSettingsResponse.from(siteSettingsRepository.save(settings));
     }
 

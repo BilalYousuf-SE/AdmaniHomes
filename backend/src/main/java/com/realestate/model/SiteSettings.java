@@ -40,4 +40,16 @@ public class SiteSettings {
 
     @Column(length = 30)
     private String whatsappNumber;
+
+    @Column(length = 150)
+    private String email;
+
+    @Column(length = 300)
+    private String instagramUrl;
+
+    @Column(length = 300)
+    private String facebookUrl;
+
+    @Column(length = 300)
+    private String linkedinUrl;
 }

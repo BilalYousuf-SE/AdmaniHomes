@@ -12,6 +12,10 @@ export default function AdminSettings() {
     expertise: [],
     realtorPhotoUrl: '',
     whatsappNumber: '',
+    email: '',
+    instagramUrl: '',
+    facebookUrl: '',
+    linkedinUrl: '',
   })
   const [expertiseInput, setExpertiseInput] = useState('')
   const [loading, setLoading] = useState(true)
@@ -30,6 +34,10 @@ export default function AdminSettings() {
           expertise: res.data.expertise || [],
           realtorPhotoUrl: res.data.realtorPhotoUrl || '',
           whatsappNumber: res.data.whatsappNumber || '',
+          email: res.data.email || '',
+          instagramUrl: res.data.instagramUrl || '',
+          facebookUrl: res.data.facebookUrl || '',
+          linkedinUrl: res.data.linkedinUrl || '',
         })
         setExpertiseInput((res.data.expertise || []).join(', '))
       })
@@ -138,6 +146,48 @@ export default function AdminSettings() {
                 onChange={(e) => setForm({ ...form, whatsappNumber: e.target.value })}
               />
             </label>
+
+            <div className="admin-form__row">
+              <label>
+                Email
+                <input
+                  type="email"
+                  placeholder="you@admanihomes.com"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </label>
+              <label>
+                Instagram URL
+                <input
+                  type="text"
+                  placeholder="https://instagram.com/yourhandle"
+                  value={form.instagramUrl}
+                  onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })}
+                />
+              </label>
+            </div>
+
+            <div className="admin-form__row">
+              <label>
+                Facebook URL
+                <input
+                  type="text"
+                  placeholder="https://facebook.com/yourpage"
+                  value={form.facebookUrl}
+                  onChange={(e) => setForm({ ...form, facebookUrl: e.target.value })}
+                />
+              </label>
+              <label>
+                LinkedIn URL
+                <input
+                  type="text"
+                  placeholder="https://linkedin.com/in/yourprofile"
+                  value={form.linkedinUrl}
+                  onChange={(e) => setForm({ ...form, linkedinUrl: e.target.value })}
+                />
+              </label>
+            </div>
 
             {error && <p className="field-error field-error--server">{error}</p>}
             {saved && <p className="admin-settings__saved">Saved.</p>}
