@@ -12,8 +12,11 @@ import com.realestate.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,12 @@ public class LeadService {
 
     private final LeadRepository leadRepository;
     private final ProjectRepository propertyRepository;
+
+    @Transactional(readOnly = true)
+    public List<LeadResponse> listAllForExport() {
+        return leadRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream().map(LeadResponse::from).toList();
+    }
 
     @Transactional
     public void submitLead(LeadRequest request) {

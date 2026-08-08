@@ -10,10 +10,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,6 +44,42 @@ public class LeadController {
             @RequestParam(required = false) LeadStatus status,
             @PageableDefault(size = 20, sort = "createdAt", direction = org.springframework.data.domain.Sort.Direction.DESC) Pageable pageable) {
         return leadService.list(status, pageable);
+    }
+
+    // NOTE: this must stay above /{id} - Spring matches the exact "/export"
+    // path before falling back to the {id} pattern, but keeping it visually
+    // grouped here avoids any future confusion about ordering.
+    @GetMapping("/export")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<byte[]> exportCsv() {
+        List<LeadResponse> leads = leadService.listAllForExport();
+
+        StringBuilder csv = new StringBuilder();
+        csv.append("Name,Email,Phone,Project,Status,Message,Submitted\n");
+        for (LeadResponse l : leads) {
+            csv.append(escape(l.fullName())).append(',')
+               .append(escape(l.email())).append(',')
+               .append(escape(l.phone())).append(',')
+               .append(escape(l.propertyTitle())).append(',')
+               .append(escape(l.status() != null ? l.status().toString() : "")).append(',')
+               .append(escape(l.message())).append(',')
+               .append(l.createdAt() != null ? l.createdAt().toString() : "")
+               .append('\n');
+        }
+
+        byte[] bytes = csv.toString().getBytes(StandardCharsets.UTF_8);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"leads.csv\"")
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(bytes);
+    }
+
+    private String escape(String value) {
+        if (value == null) return "";
+        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        }
+        return value;
     }
 
     @GetMapping("/{id}")

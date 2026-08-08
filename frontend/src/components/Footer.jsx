@@ -10,7 +10,7 @@ export default function Footer() {
         </div>
         <p>Browsing is free, always. No account needed to view projects or send an enquiry.</p>
         <p className="site-footer__admin">
-          <Link to="/contact">Contact</Link> · <a href="/admin/login">Admin sign in</a>
+          <Link to="/contact">Contact</Link>
         </p>
       </div>
     </footer>

@@ -5,32 +5,43 @@ const STATUS_LABELS = { OFF_PLAN: 'Off-Plan', READY: 'Ready' }
 const ROTATE_MS = 2800
 
 export default function ProjectCard({ project, onEnquire, reverse }) {
-  const images = (project.imageUrls || []).filter((u) => !isVideoUrl(u))
+  const media = project.imageUrls || []
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    if (images.length < 2) return
+    if (media.length < 2) return
     const timer = setInterval(() => {
-      setIndex((i) => (i + 1) % images.length)
+      setIndex((i) => (i + 1) % media.length)
     }, ROTATE_MS)
     return () => clearInterval(timer)
-  }, [images.length])
+  }, [media.length])
 
   const location = [project.area, project.city].filter(Boolean).join(', ')
+  const current = media[index]
 
   return (
     <article className={`project-row ${reverse ? 'project-row--reverse' : ''}`}>
       <div className="project-row__media">
-        {images.length > 0 ? (
-          images.map((src, i) => (
+        {current ? (
+          isVideoUrl(current) ? (
+            <video
+              key={current}
+              src={current}
+              className="project-row__media-img is-active"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
             <img
-              key={src}
-              src={src}
+              key={current}
+              src={current}
               alt={project.title}
               loading="lazy"
-              className={`project-row__media-img ${i === index ? 'is-active' : ''}`}
+              className="project-row__media-img is-active"
             />
-          ))
+          )
         ) : (
           <div className="project-row__media-placeholder">No photos yet</div>
         )}
@@ -39,9 +50,9 @@ export default function ProjectCard({ project, onEnquire, reverse }) {
           <span className="project-row__status">{STATUS_LABELS[project.projectStatus]}</span>
         )}
 
-        {images.length > 1 && (
+        {media.length > 1 && (
           <div className="project-row__dots">
-            {images.map((_, i) => (
+            {media.map((_, i) => (
               <span key={i} className={i === index ? 'is-active' : ''} />
             ))}
           </div>

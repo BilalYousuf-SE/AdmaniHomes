@@ -57,18 +57,39 @@ export default function AdminLeads() {
     }
   }
 
+  async function handleExportCsv() {
+    try {
+      const res = await api.get('/api/leads/export', { responseType: 'blob' })
+      const url = window.URL.createObjectURL(new Blob([res.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'leads.csv'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(url)
+    } catch (err) {
+      alert(extractErrorMessage(err))
+    }
+  }
+
   return (
     <div className="admin-page">
       <AdminNav />
       <main className="admin-content">
         <div className="admin-content__header">
           <h1>Leads</h1>
-          <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(0) }}>
-            <option value="">All statuses</option>
-            <option value="NEW">Yet to contact</option>
-            <option value="IN_PROGRESS">In process</option>
-            <option value="CLOSED">Done</option>
-          </select>
+          <div className="admin-content__header-actions">
+            <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(0) }}>
+              <option value="">All statuses</option>
+              <option value="NEW">Yet to contact</option>
+              <option value="IN_PROGRESS">In process</option>
+              <option value="CLOSED">Done</option>
+            </select>
+            <button type="button" className="btn btn--ghost" onClick={handleExportCsv}>
+              Download CSV
+            </button>
+          </div>
         </div>
 
         {loading && <p className="state-message">Loading…</p>}
@@ -94,7 +115,7 @@ export default function AdminLeads() {
                     <td>{l.fullName}</td>
                     <td className="mono">{l.email}</td>
                     <td className="mono">{l.phone}</td>
-                    <td>{l.propertyTitle ? `LST-${String(l.propertyId).padStart(4, '0')}` : '—'}</td>
+                    <td>{l.propertyTitle || '—'}</td>
                     <td className="admin-table__message" title={l.message}>{l.message || '—'}</td>
                     <td>
                       <select
