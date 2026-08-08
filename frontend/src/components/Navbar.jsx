@@ -5,7 +5,7 @@ export default function Navbar() {
     <header className="site-header">
       <div className="site-header__inner">
         <Link to="/" className="brand">
-          <span className="brand__mark">M</span>
+          <span className="brand__mark">A</span>
           <span className="brand__name">Admani&nbsp;Homes</span>
         </Link>
         <nav className="site-nav">
