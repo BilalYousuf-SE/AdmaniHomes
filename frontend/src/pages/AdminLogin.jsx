@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import api, { extractErrorMessage } from '../api/api.js'
+import logo from '../assets/logo.png'
 
 export default function AdminLogin() {
   const navigate = useNavigate()
@@ -30,44 +31,43 @@ export default function AdminLogin() {
 
   return (
     <main className="admin-auth">
-      <form className="admin-auth__card" onSubmit={handleSubmit}>
-        <p className="brand admin-auth__brand">
-          <span className="brand__mark">A</span>
-          <span className="brand__name">Admani Homes</span>
-        </p>
-        <h1>Admin sign in</h1>
-        <p className="admin-auth__hint">Manage properties and leads.</p>
+      <div className="admin-auth__wrap">
+        <img src={logo} alt="Admani Homes" className="admin-auth__logo" />
+        <form className="admin-auth__card" onSubmit={handleSubmit}>
+          <h1>Admin sign in</h1>
+          <p className="admin-auth__hint">Manage projects and leads.</p>
 
-        <label>
-          Username
-          <input
-            type="text"
-            autoComplete="username"
-            value={form.username}
-            onChange={(e) => setForm({ ...form, username: e.target.value })}
-            required
-          />
-        </label>
+          <label>
+            Username
+            <input
+              type="text"
+              autoComplete="username"
+              value={form.username}
+              onChange={(e) => setForm({ ...form, username: e.target.value })}
+              required
+            />
+          </label>
 
-        <label>
-          Password
-          <input
-            type="password"
-            autoComplete="current-password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            required
-          />
-        </label>
+          <label>
+            Password
+            <input
+              type="password"
+              autoComplete="current-password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              required
+            />
+          </label>
 
-        {error && <p className="field-error field-error--server">{error}</p>}
+          {error && <p className="field-error field-error--server">{error}</p>}
 
-        <button type="submit" className="btn btn--primary" disabled={submitting}>
-          {submitting ? 'Signing in…' : 'Sign in'}
-        </button>
+          <button type="submit" className="btn btn--primary" disabled={submitting}>
+            {submitting ? 'Signing in…' : 'Sign in'}
+          </button>
 
-        <a href="/" className="admin-auth__back">Back to site</a>
-      </form>
+          <a href="/" className="admin-auth__back">Back to site</a>
+        </form>
+      </div>
     </main>
   )
 }

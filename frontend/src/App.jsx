@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import DeveloperBadge from './components/DeveloperBadge.jsx'
 import Home from './pages/Home.jsx'
 import Contact from './pages/Contact.jsx'
 import AdminLogin from './pages/AdminLogin.jsx'
@@ -23,6 +24,7 @@ export default function App() {
               <Navbar />
               <Home />
               <Footer />
+              <DeveloperBadge />
             </>
           }
         />
@@ -33,6 +35,7 @@ export default function App() {
               <Navbar />
               <Contact />
               <Footer />
+              <DeveloperBadge />
             </>
           }
         />

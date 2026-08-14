@@ -15,6 +15,11 @@ export default function Home() {
   const formRef = useRef(null)
 
   useEffect(() => {
+    // Fire-and-forget visit tracking - never blocks the page or shows an error
+    api.post('/api/visits').catch(() => {})
+  }, [])
+
+  useEffect(() => {
     setLoading(true)
     setError('')
     Promise.all([
