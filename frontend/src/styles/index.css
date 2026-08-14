@@ -45,9 +45,9 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Brand ---------- */
 .brand { display: inline-flex; align-items: center; }
-.brand__logo { height: 60px; width: auto; display: block; }
-.brand__logo--footer { height: 76px; margin: 0 auto 0.8rem; }
-.brand__logo--admin { height: 52px; }
+.brand__logo { height: 70px; width: auto; display: block; }
+.brand__logo--footer { height: 90px; margin: 0 auto 0.8rem; }
+.brand__logo--admin { height: 60px; }
 
 /* ---------- Buttons ---------- */
 .btn {
