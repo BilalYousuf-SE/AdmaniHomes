@@ -6,7 +6,7 @@ export default function PartnersStrip({ partners }) {
 
   return (
     <section className="partners-strip">
-      <p className="partners-strip__eyebrow">Our Network of Premium Developers</p>
+      <p className="partners-strip__eyebrow">We're working with</p>
       <div className="partners-strip__track">
         {loop.map((p, i) => (
           <div className="partners-strip__item" key={`${p.id}-${i}`}>

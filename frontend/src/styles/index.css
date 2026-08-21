@@ -45,9 +45,9 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Brand ---------- */
 .brand { display: inline-flex; align-items: center; }
-.brand__logo { height: 120px; width: auto; display: block; }
-.brand__logo--footer { height: 90px; margin: 0 auto 0.8rem; }
-.brand__logo--admin { height: 60px; }
+.brand__logo { height: 60px; width: auto; display: block; }
+.brand__logo--footer { height: 76px; margin: 0 auto 0.8rem; }
+.brand__logo--admin { height: 52px; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -367,3 +367,13 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--gold); outl
   .dev-badge__trigger { width: 50px; height: 50px; }
   .dev-badge__card { width: 220px; bottom: 60px; }
 }
+
+/* ---------- Legal pages ---------- */
+.legal-page { padding: 3.5rem 1.5rem 4.5rem; }
+.legal-page__inner { max-width: 720px; margin: 0 auto; }
+.legal-page__updated { color: #6b6a5f; font-size: 0.85rem; margin: 0 0 2rem; }
+.legal-page h2 { font-size: 1.3rem; margin-top: 2.2rem; }
+.legal-page p, .legal-page li { line-height: 1.7; color: #3a3830; }
+.legal-page ul { padding-left: 1.3rem; margin: 0.8rem 0; }
+.legal-page li { margin-bottom: 0.5rem; }
+.legal-page a { color: var(--gold-dark); text-decoration: underline; }

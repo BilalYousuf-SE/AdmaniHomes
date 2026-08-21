@@ -10,13 +10,15 @@ import AdminPropertyForm from './pages/AdminPropertyForm.jsx'
 import AdminLeads from './pages/AdminLeads.jsx'
 import AdminPartners from './pages/AdminPartners.jsx'
 import AdminSettings from './pages/AdminSettings.jsx'
+import Privacy from './pages/Privacy.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 export default function App() {
   return (
     <div className="app-shell">
       <Routes>
-        {/* Public site - just two pages, by design */}
+        {/* Public site - Home and Contact are the two main pages; Privacy is a
+            footer-only legal utility page, not part of the main navigation */}
         <Route
           path="/"
           element={
@@ -36,6 +38,16 @@ export default function App() {
               <Contact />
               <Footer />
               <DeveloperBadge />
+            </>
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+            <>
+              <Navbar />
+              <Privacy />
+              <Footer />
             </>
           }
         />
