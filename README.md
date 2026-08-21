@@ -1,4 +1,4 @@
-# Meridian Homes — Real Estate Listing & Lead Platform
+# Admani Homes — Real Estate Listing & Lead Platform
 
 A full-stack real estate site: public visitors browse properties and submit
 enquiries with no sign-up; an admin (password-protected) manages listings and
