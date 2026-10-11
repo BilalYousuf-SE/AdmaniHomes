@@ -8,7 +8,7 @@ export default function Footer() {
         <img src={logo} alt="Admani Homes" className="brand__logo brand__logo--footer" />
         <p>Browsing is free, always. No account needed to view projects or send an enquiry.</p>
         <p className="site-footer__admin">
-          <Link to="/contact">Contact</Link> · <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/contact">Contact</Link> · <Link to="/privacy">Privacy Policy</Link> · <Link to="/terms">Terms</Link>
         </p>
       </div>
     </footer>

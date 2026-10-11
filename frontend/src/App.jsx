@@ -12,6 +12,7 @@ import AdminPartners from './pages/AdminPartners.jsx'
 import AdminSettings from './pages/AdminSettings.jsx'
 import Privacy from './pages/Privacy.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import Terms from './pages/Terms.jsx'
 
 export default function App() {
   return (
@@ -47,6 +48,16 @@ export default function App() {
             <>
               <Navbar />
               <Privacy />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <>
+              <Navbar />
+              <Terms />
               <Footer />
             </>
           }
