@@ -34,20 +34,21 @@ export default function AboutRealtor({ settings }) {
             </div>
           )}
 
-          {hasExpertise && (
-            <div className="about-realtor__expertise">
-              {settings.expertise.map((item, i) => (
-                <span key={i} className="about-realtor__pill">{item}</span>
-              ))}
-            </div>
-          )}
-
-          {hasMission && (
-            <blockquote className="about-realtor__mission">
-              <p>{settings.mission}</p>
-            </blockquote>
-          )}
         </div>
+
+        {hasExpertise && (
+          <div className="about-realtor__expertise">
+            {settings.expertise.map((item, i) => (
+              <span key={i} className="about-realtor__pill">{item}</span>
+            ))}
+          </div>
+        )}
+
+        {hasMission && (
+          <blockquote className="about-realtor__mission">
+            <p>{settings.mission}</p>
+          </blockquote>
+        )}
       </div>
     </section>
   )

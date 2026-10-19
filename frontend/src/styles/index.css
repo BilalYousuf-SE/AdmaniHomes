@@ -124,9 +124,9 @@ a { color: inherit; text-decoration: none; }
 .about-realtor { padding: 4.5rem 1.5rem; background: var(--parchment); }
 .about-realtor__inner {
   max-width: 1180px; margin: 0 auto;
-  display: grid; grid-template-columns: 340px 1fr; gap: 3.5rem; align-items: start;
+  display: grid; grid-template-columns: 340px minmax(0, 1fr); column-gap: 3rem; row-gap: 1.5rem; align-items: start;
 }
-.about-realtor__inner--two-photos { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 2.5rem; }
+.about-realtor__inner--two-photos { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); column-gap: 2.5rem; }
 .about-realtor__photo { display: grid; gap: 1rem; min-width: 0; }
 .about-realtor__inner--two-photos .about-realtor__photo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .about-realtor__inner--no-photo { grid-template-columns: 1fr; max-width: 720px; text-align: center; }
@@ -138,14 +138,14 @@ a { color: inherit; text-decoration: none; }
 .about-realtor__title { color: var(--gold-dark); font-weight: 600; font-size: 0.98rem; margin: 0 0 1.2rem; }
 .about-realtor__bio p { line-height: 1.7; color: #3a3830; max-width: 62ch; margin: 0 0 0.9rem; }
 .about-realtor__inner--no-photo .about-realtor__bio p { margin-left: auto; margin-right: auto; }
-.about-realtor__expertise { display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 1.3rem 0; }
+.about-realtor__expertise { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 0; }
 .about-realtor__inner--no-photo .about-realtor__expertise { justify-content: center; }
 .about-realtor__pill {
   font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
-  border: 1px solid var(--navy); color: var(--navy); border-radius: 20px; padding: 0.35rem 0.9rem;
+  border: 1px solid var(--navy); color: var(--navy); border-radius: 20px; padding: 0.35rem 0.9rem; max-width: 100%; overflow-wrap: anywhere;
 }
 .about-realtor__mission {
-  margin: 1.6rem 0 0; padding: 1.2rem 1.5rem; border-left: 3px solid var(--gold);
+  grid-column: 1 / -1; margin: 0; padding: 1.2rem 1.5rem; border-left: 3px solid var(--gold);
   background: var(--parchment-panel); border-radius: 0 var(--radius) var(--radius) 0;
 }
 .about-realtor__inner--no-photo .about-realtor__mission { border-left: none; border-top: 3px solid var(--gold); text-align: left; }
