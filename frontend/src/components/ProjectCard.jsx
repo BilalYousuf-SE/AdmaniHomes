@@ -1,3 +1,4 @@
+import { whatsappLink } from '../lib/whatsapp.js'
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { isVideoUrl } from '../api/upload.js'
 import { forgetProject, getSnapshot, reportVisibility, setSoundOn, subscribe } from '../lib/mediaFocus.js'
@@ -5,7 +6,7 @@ import { forgetProject, getSnapshot, reportVisibility, setSoundOn, subscribe } f
 const STATUS_LABELS = { OFF_PLAN: 'Off-Plan', READY: 'Ready' }
 const ROTATE_MS = 2800
 
-export default function ProjectCard({ project, onEnquire, reverse }) {
+export default function ProjectCard({ project, onEnquire, reverse, whatsappNumber }) {
   const media = project.imageUrls || []
   const [index, setIndex] = useState(0)
   const [muted, setMuted] = useState(true)
@@ -74,6 +75,9 @@ export default function ProjectCard({ project, onEnquire, reverse }) {
   }
 
   const location = [project.area, project.city].filter(Boolean).join(', ')
+  const infoLink = whatsappLink(whatsappNumber,
+    `Hi, I'd like more information about ${project.title}${location ? ` in ${location}` : ''}. Could you please share the details?`)
+
 
   return (
     <article className={`project-row ${reverse ? 'project-row--reverse' : ''}`}>
@@ -151,9 +155,16 @@ export default function ProjectCard({ project, onEnquire, reverse }) {
         {project.propertyType && <p className="project-row__type">{project.propertyType}</p>}
         {project.description && <p className="project-row__description">{project.description}</p>}
 
-        <button type="button" className="btn btn--primary" onClick={() => onEnquire?.(project)}>
-          Enquire about this project
-        </button>
+        <div className="project-row__actions">
+          <button type="button" className="btn btn--primary" onClick={() => onEnquire?.(project)}>
+            Enquire about this project
+          </button>
+          {infoLink && (
+            <a href={infoLink} target="_blank" rel="noreferrer" className="btn btn--gold" aria-label={`For more info about ${project.title} on WhatsApp`}>
+              For more info
+            </a>
+          )}
+        </div>
       </div>
     </article>
   )

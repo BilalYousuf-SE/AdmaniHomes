@@ -27,6 +27,15 @@ public class SiteSettingsRequest {
 
     private String realtorPhotoUrl;
 
+    @Size(max = 1000)
+    private String additionalPhotoUrl;
+
+    @Size(max = 1000)
+    private String secondaryWhatsappQrUrl;
+
+    @Pattern(regexp = "^$|^\\+?[0-9]{7,15}$", message = "Enter a valid second WhatsApp number (7-15 digits, optional +country code)")
+    private String secondaryWhatsappNumber;
+
     @Pattern(regexp = "^$|^\\+?[0-9]{7,15}$", message = "Enter a valid WhatsApp number (7-15 digits, optional +country code)")
     private String whatsappNumber;
 

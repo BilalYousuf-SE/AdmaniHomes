@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
 import api, { extractErrorMessage } from '../api/api.js'
 import LeadForm from '../components/LeadForm.jsx'
-
-function whatsappLink(number) {
-  const digits = (number || '').replace(/[^0-9]/g, '')
-  return `https://wa.me/${digits}`
-}
+import { whatsappLink } from '../lib/whatsapp.js'
 
 export default function Contact() {
   const [settings, setSettings] = useState(null)
@@ -19,11 +15,14 @@ export default function Contact() {
       .finally(() => setLoading(false))
   }, [])
 
-  const hasWhatsapp = Boolean(settings?.whatsappNumber)
-  const link = hasWhatsapp ? whatsappLink(settings.whatsappNumber) : null
-  const qrSrc = hasWhatsapp
+  const link = whatsappLink(settings?.whatsappNumber)
+  const secondaryLink = whatsappLink(settings?.secondaryWhatsappNumber)
+  const qrSrc = link
     ? `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(link)}`
     : null
+  const secondaryQrSrc = settings?.secondaryWhatsappQrUrl || (secondaryLink
+    ? `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(secondaryLink)}`
+    : null)
 
   const socials = [
     settings?.email && { label: settings.email, href: `mailto:${settings.email}` },
@@ -48,13 +47,29 @@ export default function Contact() {
 
         {!loading && !error && (
           <div className="contact-page__grid">
-            {hasWhatsapp && (
+            {(link || secondaryQrSrc || socials.length > 0) && (
               <div className="contact-page__whatsapp">
-                <h2>Scan to chat</h2>
-                <img src={qrSrc} alt="WhatsApp QR code" className="contact-page__qr" />
-                <a href={link} target="_blank" rel="noreferrer" className="btn btn--primary">
-                  Open WhatsApp chat
-                </a>
+                {link && (
+                  <>
+                    <h2>Scan to chat</h2>
+                    <img src={qrSrc} alt="WhatsApp QR code" className="contact-page__qr" />
+                    <a href={link} target="_blank" rel="noreferrer" className="btn btn--primary">
+                      Open WhatsApp chat
+                    </a>
+                  </>
+                )}
+
+                {secondaryQrSrc && (
+                  <div className="contact-page__additional-whatsapp">
+                    <h2>Another way to chat</h2>
+                    <img src={secondaryQrSrc} alt="Additional WhatsApp QR code" className="contact-page__qr" />
+                    {secondaryLink && (
+                      <a href={secondaryLink} target="_blank" rel="noreferrer" className="btn btn--primary">
+                        Open second WhatsApp chat
+                      </a>
+                    )}
+                  </div>
+                )}
 
                 {socials.length > 0 && (
                   <div className="contact-page__socials">

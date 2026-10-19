@@ -38,6 +38,15 @@ public class SiteSettings {
     @Column(length = 1000)
     private String realtorPhotoUrl;
 
+    @Column(length = 1000)
+    private String additionalPhotoUrl;
+
+    @Column(length = 1000)
+    private String secondaryWhatsappQrUrl;
+
+    @Column(length = 30)
+    private String secondaryWhatsappNumber;
+
     @Column(length = 30)
     private String whatsappNumber;
 

@@ -11,6 +11,9 @@ export default function AdminSettings() {
     mission: '',
     expertise: [],
     realtorPhotoUrl: '',
+    additionalPhotoUrl: '',
+    secondaryWhatsappQrUrl: '',
+    secondaryWhatsappNumber: '',
     whatsappNumber: '',
     email: '',
     instagramUrl: '',
@@ -33,6 +36,9 @@ export default function AdminSettings() {
           mission: res.data.mission || '',
           expertise: res.data.expertise || [],
           realtorPhotoUrl: res.data.realtorPhotoUrl || '',
+          additionalPhotoUrl: res.data.additionalPhotoUrl || '',
+          secondaryWhatsappQrUrl: res.data.secondaryWhatsappQrUrl || '',
+          secondaryWhatsappNumber: res.data.secondaryWhatsappNumber || '',
           whatsappNumber: res.data.whatsappNumber || '',
           email: res.data.email || '',
           instagramUrl: res.data.instagramUrl || '',
@@ -103,6 +109,16 @@ export default function AdminSettings() {
             </label>
 
             <label>
+              Additional About image
+              <MediaUploader
+                value={form.additionalPhotoUrl ? [form.additionalPhotoUrl] : []}
+                onChange={(urls) => setForm((prev) => ({ ...prev, additionalPhotoUrl: urls[urls.length - 1] || '' }))}
+                accept="image/*"
+                maxFiles={1}
+              />
+            </label>
+
+            <label>
               Bio
               <textarea
                 rows={6}
@@ -143,9 +159,31 @@ export default function AdminSettings() {
                 type="tel"
                 placeholder="+971 50 000 0000"
                 value={form.whatsappNumber}
-                onChange={(e) => setForm({ ...form, whatsappNumber: e.target.value })}
+                onChange={(e) => setForm({ ...form, whatsappNumber: e.target.value.replace(/[^+0-9]/g, '') })}
               />
             </label>
+
+            <p className="admin-content__subtitle">The main WhatsApp number is used by each project's “For more info” button. Include the country code.</p>
+
+            <label>
+              Second WhatsApp number (optional)
+              <input
+                type="tel"
+                placeholder="+971500000000"
+                value={form.secondaryWhatsappNumber}
+                onChange={(e) => setForm({ ...form, secondaryWhatsappNumber: e.target.value.replace(/[^+0-9]/g, '') })}
+              />
+            </label>
+            <label>
+              Additional WhatsApp QR code
+              <MediaUploader
+                value={form.secondaryWhatsappQrUrl ? [form.secondaryWhatsappQrUrl] : []}
+                onChange={(urls) => setForm((prev) => ({ ...prev, secondaryWhatsappQrUrl: urls[urls.length - 1] || '' }))}
+                accept="image/*"
+                maxFiles={1}
+              />
+            </label>
+            <p className="admin-content__subtitle">Upload your WhatsApp QR image, or enter a second number to generate its QR code automatically. If you provide both, make sure they point to the same chat.</p>
 
             <div className="admin-form__row">
               <label>

@@ -1,6 +1,6 @@
 export default function AboutRealtor({ settings }) {
   const hasBio = Boolean(settings?.bio)
-  const hasPhoto = Boolean(settings?.realtorPhotoUrl)
+  const hasPhoto = Boolean(settings?.realtorPhotoUrl || settings?.additionalPhotoUrl)
   const hasMission = Boolean(settings?.mission)
   const hasExpertise = Boolean(settings?.expertise?.length)
   const hasRealtorName = Boolean(settings?.realtorName)
@@ -13,7 +13,10 @@ export default function AboutRealtor({ settings }) {
       <div className={`about-realtor__inner ${hasPhoto ? '' : 'about-realtor__inner--no-photo'}`}>
         {hasPhoto && (
           <div className="about-realtor__photo">
-            <img src={settings.realtorPhotoUrl} alt={settings.realtorName || 'Realtor'} />
+            {settings.realtorPhotoUrl && <img src={settings.realtorPhotoUrl} alt={settings.realtorName || 'Realtor'} />}
+            {settings.additionalPhotoUrl && (
+              <img src={settings.additionalPhotoUrl} alt={`More about ${settings.realtorName || 'Admani Homes'}`} loading="lazy" className="about-realtor__additional-photo" />
+            )}
           </div>
         )}
 

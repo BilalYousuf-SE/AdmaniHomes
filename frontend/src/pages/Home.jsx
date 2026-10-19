@@ -73,7 +73,7 @@ export default function Home() {
 
         <div className="projects-list">
           {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} onEnquire={handleEnquire} reverse={i % 2 === 1} />
+            <ProjectCard key={p.id} project={p} whatsappNumber={settings?.whatsappNumber} onEnquire={handleEnquire} reverse={i % 2 === 1} />
           ))}
         </div>
       </section>

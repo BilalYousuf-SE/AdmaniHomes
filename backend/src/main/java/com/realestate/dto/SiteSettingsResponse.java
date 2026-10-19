@@ -11,6 +11,9 @@ public record SiteSettingsResponse(
         String mission,
         List<String> expertise,
         String realtorPhotoUrl,
+        String additionalPhotoUrl,
+        String secondaryWhatsappQrUrl,
+        String secondaryWhatsappNumber,
         String whatsappNumber,
         String email,
         String instagramUrl,
@@ -20,7 +23,8 @@ public record SiteSettingsResponse(
     public static SiteSettingsResponse from(SiteSettings s) {
         return new SiteSettingsResponse(
                 s.getRealtorName(), s.getRealtorTitle(), s.getBio(), s.getMission(),
-                s.getExpertise(), s.getRealtorPhotoUrl(), s.getWhatsappNumber(),
+                s.getExpertise(), s.getRealtorPhotoUrl(), s.getAdditionalPhotoUrl(),
+                s.getSecondaryWhatsappQrUrl(), s.getSecondaryWhatsappNumber(), s.getWhatsappNumber(),
                 s.getEmail(), s.getInstagramUrl(), s.getFacebookUrl(), s.getLinkedinUrl()
         );
     }
