@@ -1,6 +1,7 @@
 export default function AboutRealtor({ settings }) {
   const hasBio = Boolean(settings?.bio)
   const hasPhoto = Boolean(settings?.realtorPhotoUrl || settings?.additionalPhotoUrl)
+  const hasBothPhotos = Boolean(settings?.realtorPhotoUrl && settings?.additionalPhotoUrl)
   const hasMission = Boolean(settings?.mission)
   const hasExpertise = Boolean(settings?.expertise?.length)
   const hasRealtorName = Boolean(settings?.realtorName)
@@ -10,7 +11,7 @@ export default function AboutRealtor({ settings }) {
 
   return (
     <section className="about-realtor">
-      <div className={`about-realtor__inner ${hasPhoto ? '' : 'about-realtor__inner--no-photo'}`}>
+      <div className={`about-realtor__inner ${hasPhoto ? '' : 'about-realtor__inner--no-photo'} ${hasBothPhotos ? 'about-realtor__inner--two-photos' : ''}`}>
         {hasPhoto && (
           <div className="about-realtor__photo">
             {settings.realtorPhotoUrl && <img src={settings.realtorPhotoUrl} alt={settings.realtorName || 'Realtor'} />}
