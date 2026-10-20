@@ -395,6 +395,13 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--gold); outl
 .project-row__sound:hover { background: rgba(9, 12, 19, 0.9); }
 .project-row__sound svg { width: 16px; height: 16px; }
 /* Additional settings media and project WhatsApp actions */
-.project-row__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.project-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.project-row__whatsapp {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; flex-shrink: 0; color: #128c46; border-radius: 50%;
+}
+.project-row__whatsapp svg { width: 26px; height: 26px; }
+.project-row__whatsapp:hover { color: #075e36; background: #e5f5eb; }
+.project-row__whatsapp:focus-visible { outline: 2px solid #128c46; outline-offset: 2px; }
 .contact-page__additional-whatsapp { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
 .contact-page__additional-whatsapp:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
