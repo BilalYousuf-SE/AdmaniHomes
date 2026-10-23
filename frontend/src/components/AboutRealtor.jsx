@@ -1,54 +1,59 @@
-export default function AboutRealtor({ settings }) {
-  const hasBio = Boolean(settings?.bio)
-  const hasPhoto = Boolean(settings?.realtorPhotoUrl || settings?.additionalPhotoUrl)
-  const hasBothPhotos = Boolean(settings?.realtorPhotoUrl && settings?.additionalPhotoUrl)
-  const hasMission = Boolean(settings?.mission)
-  const hasExpertise = Boolean(settings?.expertise?.length)
-  const hasRealtorName = Boolean(settings?.realtorName)
-  const hasRealtorTitle = Boolean(settings?.realtorTitle)
+import { useId, useState } from 'react'
 
-  if (!hasBio && !hasPhoto && !hasExpertise && !hasMission && !hasRealtorName && !hasRealtorTitle) return null
+function ProfileCard({ name, title, photo, bio }) {
+  const [expanded, setExpanded] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const bioId = useId()
+  const visible = expanded || hovered || focused
 
   return (
-    <section className="about-realtor">
-      <div className={`about-realtor__inner ${hasPhoto ? '' : 'about-realtor__inner--no-photo'} ${hasBothPhotos ? 'about-realtor__inner--two-photos' : ''}`}>
-        {hasPhoto && (
-          <div className="about-realtor__photo">
-            {settings.realtorPhotoUrl && <img src={settings.realtorPhotoUrl} alt={settings.realtorName || 'Realtor'} />}
-            {settings.additionalPhotoUrl && (
-              <img src={settings.additionalPhotoUrl} alt={`More about ${settings.realtorName || 'Admani Homes'}`} loading="lazy" className="about-realtor__additional-photo" />
-            )}
-          </div>
+    <article className={`profile-card ${visible ? 'profile-card--open' : ''}`}
+      onMouseEnter={() => {
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) setHovered(true)
+      }}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={(e) => {
+        if (e.target.matches(':focus-visible')) setFocused(true)
+      }}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false)
+      }}>
+      {photo && <div className="profile-card__photo"><img src={photo} alt={name || 'Admani Homes team member'} loading="lazy" /></div>}
+      <div className="profile-card__intro">
+        <h3>{name || 'Meet your property advisor'}</h3>
+        {title && <p className="profile-card__title">{title}</p>}
+        {bio && (
+          <button type="button" className="profile-card__toggle" aria-expanded={visible} aria-controls={bioId}
+            onClick={() => { setExpanded(!visible); setHovered(false); setFocused(false) }}>
+            {visible ? 'Close bio' : 'Read bio'} <span aria-hidden="true">{visible ? '−' : '+'}</span>
+          </button>
         )}
-
-        <div className="about-realtor__text">
-          <p className="hero__eyebrow">About</p>
-          {hasRealtorName ? <h2>{settings.realtorName}</h2> : <h2>The person behind Admani Homes</h2>}
-          {hasRealtorTitle && <p className="about-realtor__title">{settings.realtorTitle}</p>}
-
-          {hasBio && (
-            <div className="about-realtor__bio">
-              {settings.bio.split(/\n+/).filter(Boolean).map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          )}
-
+      </div>
+      {bio && (
+        <div id={bioId} className="profile-card__bio" hidden={!visible}>
+          {bio.split(/\n+/).filter(Boolean).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
         </div>
+      )}
+    </article>
+  )
+}
 
-        {hasExpertise && (
-          <div className="about-realtor__expertise">
-            {settings.expertise.map((item, i) => (
-              <span key={i} className="about-realtor__pill">{item}</span>
-            ))}
-          </div>
-        )}
+export default function AboutRealtor({ settings }) {
+  const profiles = [
+    { name: settings?.realtorName, title: settings?.realtorTitle, photo: settings?.realtorPhotoUrl, bio: settings?.bio },
+    { name: settings?.secondRealtorName, title: settings?.secondRealtorTitle, photo: settings?.additionalPhotoUrl, bio: settings?.secondBio },
+  ].filter((profile) => Object.values(profile).some(Boolean))
+  if (!profiles.length) return null
 
-        {hasMission && (
-          <blockquote className="about-realtor__mission">
-            <p>{settings.mission}</p>
-          </blockquote>
-        )}
+  return (
+    <section className="about-realtor" aria-labelledby="about-heading">
+      <div className="about-realtor__heading">
+        <p className="hero__eyebrow">About us</p>
+        <h2 id="about-heading">The people behind your next move.</h2>
+      </div>
+      <div className={`profile-grid ${profiles.length === 1 ? 'profile-grid--single' : ''}`}>
+        {profiles.map((profile, index) => <ProfileCard key={index} {...profile} />)}
       </div>
     </section>
   )

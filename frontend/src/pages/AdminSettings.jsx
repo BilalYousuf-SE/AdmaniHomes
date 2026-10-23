@@ -8,6 +8,9 @@ export default function AdminSettings() {
     realtorName: '',
     realtorTitle: '',
     bio: '',
+    secondRealtorName: '',
+    secondRealtorTitle: '',
+    secondBio: '',
     mission: '',
     expertise: [],
     realtorPhotoUrl: '',
@@ -20,7 +23,6 @@ export default function AdminSettings() {
     facebookUrl: '',
     linkedinUrl: '',
   })
-  const [expertiseInput, setExpertiseInput] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -33,6 +35,9 @@ export default function AdminSettings() {
           realtorName: res.data.realtorName || '',
           realtorTitle: res.data.realtorTitle || '',
           bio: res.data.bio || '',
+          secondRealtorName: res.data.secondRealtorName || '',
+          secondRealtorTitle: res.data.secondRealtorTitle || '',
+          secondBio: res.data.secondBio || '',
           mission: res.data.mission || '',
           expertise: res.data.expertise || [],
           realtorPhotoUrl: res.data.realtorPhotoUrl || '',
@@ -45,7 +50,6 @@ export default function AdminSettings() {
           facebookUrl: res.data.facebookUrl || '',
           linkedinUrl: res.data.linkedinUrl || '',
         })
-        setExpertiseInput((res.data.expertise || []).join(', '))
       })
       .catch((err) => setError(extractErrorMessage(err)))
       .finally(() => setLoading(false))
@@ -79,6 +83,7 @@ export default function AdminSettings() {
           <p className="state-message">Loading…</p>
         ) : (
           <form className="admin-form" onSubmit={handleSubmit}>
+            <h2>First person</h2>
             <label>
               Realtor name
               <input
@@ -109,7 +114,29 @@ export default function AdminSettings() {
             </label>
 
             <label>
-              Additional About image
+              Bio
+              <textarea
+                rows={6}
+                maxLength={2000}
+                placeholder="A couple of paragraphs about who you are and your approach…"
+                value={form.bio}
+                onChange={(e) => setForm({ ...form, bio: e.target.value })}
+              />
+            </label>
+
+            <h2>Second person</h2>
+            <label>
+              Second person’s name
+              <input type="text" maxLength={150} value={form.secondRealtorName}
+                onChange={(e) => setForm({ ...form, secondRealtorName: e.target.value })} />
+            </label>
+            <label>
+              Second person’s title / role
+              <input type="text" maxLength={250} value={form.secondRealtorTitle}
+                onChange={(e) => setForm({ ...form, secondRealtorTitle: e.target.value })} />
+            </label>
+            <label>
+              Second person’s photo
               <MediaUploader
                 value={form.additionalPhotoUrl ? [form.additionalPhotoUrl] : []}
                 onChange={(urls) => setForm((prev) => ({ ...prev, additionalPhotoUrl: urls[urls.length - 1] || '' }))}
@@ -119,38 +146,9 @@ export default function AdminSettings() {
             </label>
 
             <label>
-              Bio
-              <textarea
-                rows={6}
-                placeholder="A couple of paragraphs about who you are and your approach…"
-                value={form.bio}
-                onChange={(e) => setForm({ ...form, bio: e.target.value })}
-              />
-            </label>
-
-            <label>
-              Mission
-              <textarea
-                rows={4}
-                value={form.mission}
-                onChange={(e) => setForm({ ...form, mission: e.target.value })}
-              />
-            </label>
-
-            <label>
-              Areas of expertise (comma separated)
-              <textarea
-                rows={3}
-                placeholder="Off-Plan Properties, Investment Advisory, Market Analysis"
-                value={expertiseInput}
-                onChange={(e) => {
-                  setExpertiseInput(e.target.value)
-                  setForm({
-                    ...form,
-                    expertise: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
-                  })
-                }}
-              />
+              Second person’s bio
+              <textarea rows={6} maxLength={2000} value={form.secondBio}
+                onChange={(e) => setForm({ ...form, secondBio: e.target.value })} />
             </label>
 
             <label>

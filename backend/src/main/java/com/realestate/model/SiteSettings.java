@@ -38,6 +38,15 @@ public class SiteSettings {
     @Column(length = 1000)
     private String realtorPhotoUrl;
 
+    @Column(length = 150)
+    private String secondRealtorName;
+
+    @Column(length = 250)
+    private String secondRealtorTitle;
+
+    @Column(length = 2000)
+    private String secondBio;
+
     @Column(length = 1000)
     private String additionalPhotoUrl;
 

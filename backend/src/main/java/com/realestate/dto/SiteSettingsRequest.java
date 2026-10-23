@@ -27,6 +27,15 @@ public class SiteSettingsRequest {
 
     private String realtorPhotoUrl;
 
+    @Size(max = 150)
+    private String secondRealtorName;
+
+    @Size(max = 250)
+    private String secondRealtorTitle;
+
+    @Size(max = 2000, message = "Second bio must be under 2000 characters")
+    private String secondBio;
+
     @Size(max = 1000)
     private String additionalPhotoUrl;
 

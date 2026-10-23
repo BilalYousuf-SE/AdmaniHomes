@@ -12,6 +12,9 @@ public record SiteSettingsResponse(
         List<String> expertise,
         String realtorPhotoUrl,
         String additionalPhotoUrl,
+        String secondRealtorName,
+        String secondRealtorTitle,
+        String secondBio,
         String secondaryWhatsappQrUrl,
         String secondaryWhatsappNumber,
         String whatsappNumber,
@@ -24,6 +27,7 @@ public record SiteSettingsResponse(
         return new SiteSettingsResponse(
                 s.getRealtorName(), s.getRealtorTitle(), s.getBio(), s.getMission(),
                 s.getExpertise(), s.getRealtorPhotoUrl(), s.getAdditionalPhotoUrl(),
+                s.getSecondRealtorName(), s.getSecondRealtorTitle(), s.getSecondBio(),
                 s.getSecondaryWhatsappQrUrl(), s.getSecondaryWhatsappNumber(), s.getWhatsappNumber(),
                 s.getEmail(), s.getInstagramUrl(), s.getFacebookUrl(), s.getLinkedinUrl()
         );

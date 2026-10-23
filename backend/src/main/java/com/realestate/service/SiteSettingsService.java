@@ -30,6 +30,9 @@ public class SiteSettingsService {
         settings.setMission(request.getMission());
         settings.setExpertise(request.getExpertise() != null ? request.getExpertise() : new java.util.ArrayList<>());
         settings.setRealtorPhotoUrl(request.getRealtorPhotoUrl());
+        settings.setSecondRealtorName(request.getSecondRealtorName());
+        settings.setSecondRealtorTitle(request.getSecondRealtorTitle());
+        settings.setSecondBio(request.getSecondBio());
         settings.setAdditionalPhotoUrl(request.getAdditionalPhotoUrl());
         settings.setSecondaryWhatsappQrUrl(request.getSecondaryWhatsappQrUrl());
         settings.setSecondaryWhatsappNumber(request.getSecondaryWhatsappNumber());
