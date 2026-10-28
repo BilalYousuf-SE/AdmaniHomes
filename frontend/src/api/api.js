@@ -1,10 +1,17 @@
 import axios from 'axios'
 
-// Set VITE_API_URL in your .env / hosting provider env vars, e.g.
-// VITE_API_URL=https://your-backend.onrender.com
-const baseURL = import.meta.env.VITE_API_URL || 'https://admanihomes-rp9gggeg.back4.app'
+// Strip any trailing slash so URLs join cleanly.
+const clean = (url) => (url || '').replace(/\/+$/, '')
 
-export const api = axios.create({ baseURL })
+// Primary: Render. Backup: Back4app.
+// Set these in .env locally and in Vercel for production.
+// The fallbacks keep the site working if a variable is missing,
+// so replace the Render placeholder below with your real URL.
+const PRIMARY = clean(import.meta.env.VITE_API_URL) || 'https://YOUR-RENDER-URL.onrender.com'
+const BACKUP =
+  clean(import.meta.env.VITE_API_URL_BACKUP) || 'https://admanihomes-rp9gggeg.back4.app'
+
+export const api = axios.create({ baseURL: PRIMARY, timeout: 15000 })
 
 // Attach the admin JWT (if present) to every request.
 api.interceptors.request.use((config) => {
@@ -15,11 +22,30 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// If the token has expired/is invalid, the API returns 401 - bounce back to login.
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 && window.location.pathname.startsWith('/admin')) {
+    const config = error.config
+    const status = error.response?.status
+
+    // 1) Failover: primary unreachable (no response) or gateway error -> retry once on backup.
+    const primaryDown = !error.response || [502, 503, 504].includes(status)
+    if (
+      config &&
+      primaryDown &&
+      BACKUP &&
+      BACKUP !== PRIMARY &&
+      !config._retried &&
+      config.baseURL !== BACKUP
+    ) {
+      config._retried = true
+      config.baseURL = BACKUP
+      api.defaults.baseURL = BACKUP // keep using backup for this page session
+      return api(config)
+    }
+
+    // 2) Expired/invalid token on admin pages -> bounce back to login.
+    if (status === 401 && window.location.pathname.startsWith('/admin')) {
       localStorage.removeItem('admin_token')
       localStorage.removeItem('admin_username')
       if (window.location.pathname !== '/admin/login') {
