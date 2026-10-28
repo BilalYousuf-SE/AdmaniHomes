@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Set VITE_API_URL in your .env / hosting provider env vars, e.g.
 // VITE_API_URL=https://your-backend.onrender.com
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+const baseURL = import.meta.env.VITE_API_URL || 'https://admanihomes-rp9gggeg.back4.app'
 
 export const api = axios.create({ baseURL })
 
