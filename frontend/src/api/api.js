@@ -7,7 +7,7 @@ const clean = (url) => (url || '').replace(/\/+$/, '')
 // Set these in .env locally and in Vercel for production.
 // The fallbacks keep the site working if a variable is missing,
 // so replace the Render placeholder below with your real URL.
-const PRIMARY = clean(import.meta.env.VITE_API_URL) || 'https://YOUR-RENDER-URL.onrender.com'
+const PRIMARY = clean(import.meta.env.VITE_API_URL) || 'https://admanihomes.onrender.com'
 const BACKUP =
   clean(import.meta.env.VITE_API_URL_BACKUP) || 'https://admanihomes-rp9gggeg.back4.app'
 
